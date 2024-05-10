@@ -1,9 +1,11 @@
 import './index.css'
-
+import RenderRoutes from './router'
 function App() {
-
   return (
     <>
+      <div>
+        <RenderRoutes />
+      </div>
     </>
   )
 }
