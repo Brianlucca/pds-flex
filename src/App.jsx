@@ -1,4 +1,4 @@
-import './index.css'
+import './reset.css'
 import RenderRoutes from './router'
 function App() {
   return (
