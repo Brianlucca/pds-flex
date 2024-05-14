@@ -1,7 +1,7 @@
 import PageNotFound from '../../components/pageNotFound'
 
 function AdminPage() {
-  const isLoggedIn = localStorage.getItem('isAdmin') === 'true'
+  const isLoggedIn = localStorage.getItem('isAdmin') === 'admin'
 
   if (!isLoggedIn) {
     return <PageNotFound />
