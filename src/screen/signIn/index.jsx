@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { login } from '../../service/authService'
 import './style.css'
 
 function SignIn() {
@@ -6,15 +7,27 @@ function SignIn() {
   const [password, setPassword] = useState('')
   const [errorMessage, setErrorMessage] = useState('')
 
-  const handleLogin = () => {
-    if (username === 'admin' && password === '123456') {
-      localStorage.setItem('isAdmin', 'true')
-      window.location.href = '/admin'
-    } else if (username === 'pedidos' && password === '123456789') {
-      localStorage.setItem('isPedidos', 'true')
-      window.location.href = '/pedidos'
-    } else {
+  const handleLogin = async () => {
+    try {
+      const user = await login(username, password)
+
+      if (user.role === 'admin') {
+        window.location.href = '/admin'
+        localStorage.setItem('isAdmin', user.role)
+      } else if (user.role === 'pedidos') {
+        window.location.href = '/pedidos'
+        localStorage.setItem('isPedidos', user.role)
+      } else {
+        window.location.href = '/'
+      }
+    } catch (error) {
       setErrorMessage('Login inválido. Por favor, verifique suas credenciais.')
+    }
+  }
+
+  const handleKeyDown = (event) => {
+    if (event.key === 'Enter') {
+      handleLogin()
     }
   }
 
@@ -28,6 +41,7 @@ function SignIn() {
           value={username}
           onChange={(e) => setUsername(e.target.value)}
           className="input"
+          onKeyDown={handleKeyDown}
         />
         <input
           type="password"
@@ -35,6 +49,7 @@ function SignIn() {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           className="input"
+          onKeyDown={handleKeyDown}
         />
         <button onClick={handleLogin} className="button">
           Entrar
