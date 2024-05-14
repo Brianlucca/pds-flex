@@ -1,7 +1,7 @@
 import PageNotFound from '../../components/pageNotFound'
 
 function RequestsPage() {
-  const isLoggedIn = localStorage.getItem('isPedidos') === 'true'
+  const isLoggedIn = localStorage.getItem('isPedidos') === 'pedidos'
 
   if (!isLoggedIn) {
     return <PageNotFound />
