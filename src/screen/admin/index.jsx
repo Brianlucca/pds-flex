@@ -1,4 +1,6 @@
+import { AdminHeader } from '../../components/header'
 import PageNotFound from '../../components/pageNotFound'
+import './style.css'
 
 function AdminPage() {
   const isLoggedIn = localStorage.getItem('isAdmin') === 'admin'
@@ -8,8 +10,13 @@ function AdminPage() {
   } else {
     return (
       <>
-        <div>
-          <h1>Agora sim tu é admin cabeça</h1>
+        <div className="container-test">
+          <div>
+            <AdminHeader />
+          </div>
+          <div className="container-information">
+            <h1>Agora sim tu é admin cabeça</h1>
+          </div>
         </div>
       </>
     )
