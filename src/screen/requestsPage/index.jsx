@@ -1,3 +1,4 @@
+import { RequestHeader } from '../../components/header'
 import PageNotFound from '../../components/pageNotFound'
 
 function RequestsPage() {
@@ -8,8 +9,13 @@ function RequestsPage() {
   } else {
     return (
       <>
-        <div>
-          <h1>Tu ta em pedidos, mano, gerencie sua parada</h1>
+        <div className="container-test">
+          <div>
+            <RequestHeader />
+          </div>
+          <div className="container-information">
+            <h1>Tu ta em pedidos, mano, gerencie sua parada</h1>
+          </div>
         </div>
       </>
     )
