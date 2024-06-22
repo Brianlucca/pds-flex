@@ -5,6 +5,7 @@ import {
   UsersRoundIcon,
 } from 'lucide-react'
 import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import './style.css'
 
 export function AdminHeader() {
@@ -13,6 +14,9 @@ export function AdminHeader() {
   const toggleSidebar = () => {
     setIsOpen(!isOpen)
   }
+
+  const navigate = useNavigate()
+
   return (
     <div className="admin-container">
       <aside className={`sidebar ${isOpen ? 'open' : 'closed'}`}>
@@ -23,9 +27,14 @@ export function AdminHeader() {
           <ul>
             <li>
               {isOpen ? (
-                <a to="orders">Gerenciar Pedidos</a>
+                <a onClick={() => navigate('/gerenciar-pedidos')}>
+                  Gerenciar Pedidos
+                </a>
               ) : (
-                <a to="orders" title="Gerenciar Pedidos">
+                <a
+                  onClick={() => navigate('/gerenciar-pedidos')}
+                  title="Gerenciar Pedidos"
+                >
                   <LayoutListIcon />
                 </a>
               )}

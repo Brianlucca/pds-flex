@@ -4,6 +4,7 @@ import AdminPage from '../screen/admin'
 import RequestsPage from '../screen/requestsPage'
 import SignIn from '../screen/signIn'
 import PageNotFound from '../components/pageNotFound'
+import ManageOrders from '../view/admin/manageOrders'
 
 export default function RenderRoutes() {
   return (
@@ -12,6 +13,7 @@ export default function RenderRoutes() {
         <Route path="/" element={<SignIn />} />
         <Route path="/admin" element={<AdminPage />} />
         <Route path="/pedidos" element={<RequestsPage />} />
+        <Route path="/gerenciar-pedidos" element={<ManageOrders />} />
         <Route path="*" element={<PageNotFound />} />
       </Routes>
     </BrowserRouter>
