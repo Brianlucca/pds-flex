@@ -1,13 +1,14 @@
+import { Formik } from 'formik'
 import React, { useState } from 'react'
 import { login } from '../../service/authService'
 import './style.css'
+import validationForm from './validation'
 
 function SignIn() {
-  const [username, setUsername] = useState('')
-  const [password, setPassword] = useState('')
   const [errorMessage, setErrorMessage] = useState('')
 
-  const handleLogin = async () => {
+  const handleLogin = async (values) => {
+    const { username, password } = values
     try {
       const user = await login(username, password)
 
@@ -25,46 +26,72 @@ function SignIn() {
     }
   }
 
-  const handleKeyDown = (event) => {
+  const handleKeyDown = (event, submitForm) => {
     if (event.key === 'Enter') {
-      handleLogin()
+      submitForm()
     }
   }
 
   return (
     <div className="container">
       <div className="container-form">
-        <h1 className="labelInput">Bem vindo</h1>
-        <input
-          type="text"
-          placeholder="Usuário"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-          className="input"
-          onKeyDown={handleKeyDown}
-        />
-        <input
-          type="password"
-          placeholder="Senha"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          className="input"
-          onKeyDown={handleKeyDown}
-        />
-        <button onClick={handleLogin} className="button">
-          Entrar
-        </button>
-        <div className="error-message">
-          {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
-        </div>
-        <div className="container-never-account">
-          <p className="never-account-name">
-            Não tem uma conta?
-            <span className="never-account-span">
-              <a href="/">cadastro</a>
-            </span>
-          </p>
-        </div>
+        <Formik
+          initialValues={{ username: '', password: '' }}
+          onSubmit={handleLogin}
+          validationSchema={validationForm}
+        >
+          {({
+            handleChange,
+            handleBlur,
+            handleSubmit,
+            touched,
+            errors,
+            values,
+            submitForm,
+          }) => (
+            <>
+              <div className="input-container">
+                <h2>Bem Vindo</h2>
+                <input
+                  type="text"
+                  name="username"
+                  value={values.username}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  placeholder="Digite seu usuario"
+                  className="input"
+                  onKeyDown={(e) => handleKeyDown(e, submitForm)}
+                />
+                {touched.username && errors.username && (
+                  <div className="error">{errors.username}</div>
+                )}
+              </div>
+
+              <div className="input-container">
+                <input
+                  name="password"
+                  value={values.password}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  placeholder="Digite sua senha"
+                  className="input"
+                  onKeyDown={(e) => handleKeyDown(e, submitForm)}
+                />
+                {touched.password && errors.password && (
+                  <div className="error">{errors.password}</div>
+                )}
+                <button
+                  type="submit"
+                  className="button-submit"
+                  onClick={handleSubmit}
+                >
+                  SIGN IN
+                </button>
+              </div>
+              <p>{errorMessage}</p>
+            </>
+          )}
+        </Formik>
         <div className="container-icons">
           <svg
             xmlns="http://www.w3.org/2000/svg"
